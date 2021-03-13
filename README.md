@@ -36,6 +36,33 @@ python server.py
 
 Сервер запустится на порту 8080, чтобы проверить его работу перейдите в браузере на страницу [http://127.0.0.1:8080/](http://127.0.0.1:8080/).
 
+Серверу можно передать дополнительные параметры через коммандную строку либо через переменные окружения.
+
+Список переменных окружения:
+
+| Переменная окружения | Тип | Описание |
+|---|---|---|
+| SLOWDOWN | Bool | Позволяет искусственно создать задержку при загрузке файлов|
+| MEDIA_DIR | String | Путь до хранилища |
+| LOGGING | String | Принимает значения ON или OFF. Если значение OFF, будут включены логи только ошибок!|
+
+Эти же параметры можно задать через аргументы командной строки:
+
+```
+$> python server.py -h
+usage: server.py [-h] [-d {OFF,ON}] [-s] [-m MEDIA]
+
+Microservice for streaming files.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d {OFF,ON}, --debug {OFF,ON}
+                        Show logs.OFF - show only ErrorsON - show all logs
+  -s, --slowdown        Slow down file downloads
+  -m MEDIA, --media MEDIA
+                        Change default media directory
+```
+
 ## Как развернуть на сервере
 
 ```bash
@@ -51,4 +78,4 @@ GET http://host.ru/archive/af1ad8c76fda2e48ea9aed2937e972ea/
 
 # Цели проекта
 
-Код написан в учебных целях — это урок в курсе по Python и веб-разработке на сайте [Devman](https://dvmn.org).
+Код написан в рамках прохождения обучающего курса по Python и веб-разработке на сайте [Devman](https://dvmn.org).
