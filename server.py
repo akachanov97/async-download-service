@@ -56,11 +56,7 @@ def _exists(files_folder):
     """
 
     path = os.path.join(MEDIA_DIR, files_folder)
-
-    if os.path.isdir(path):
-        return True
-
-    return False
+    return os.path.isdir(path)
 
 
 def _response_header(file_name):
