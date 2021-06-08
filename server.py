@@ -45,28 +45,28 @@ MEDIA_DIR = os.getenv("MEDIA_DIR", 'test_photos')
 LOG_LVL = int(os.getenv("LOGGING", logging.ERROR))
 
 
-def _exists(files_folder):
+def _exists(files_folder: str) -> bool:
     """Check if directory exists
 
     Args:
-        files_folder ([str]): Folder for downloading
+        files_folder (str): Folder for downloading
 
     Returns:
-        [bool]: True if folder is exists else False
+        bool: True if folder is exists else False
     """
 
     path = os.path.join(MEDIA_DIR, files_folder)
     return os.path.isdir(path)
 
 
-def _response_header(file_name):
+def _response_header(file_name: str) -> aiohttp.web.StreamResponse:
     """Creating response header
 
     Args:
-        file_name ([str]): Name of downloaded file
+        file_name (str): Name of downloaded file
 
     Returns:
-        [StreamResponse]: StreamResponse object
+        StreamResponse: StreamResponse object
     """
 
     response = aiohttp.web.StreamResponse()
@@ -77,17 +77,17 @@ def _response_header(file_name):
     return response
 
 
-async def archivate(request):
+async def archivate(request: aiohttp.web.Request) -> None:
     """Archivate and send archive by chunks
 
     Args:
-        request ([Request]): HTTP Request
+        request (Request): HTTP Request
 
     Raises:
         aiohttp.web.HTTPBadRequest: raise if 'archive_hash'
                                     was not passed in the request
-        aiohttp.web.HTTPNotFound: raise if folder with 'archive_hash' name
-                                  was not found
+        aiohttp.web.HTTPNotFound: raise if folder with 'archive_hash'
+                                  name was not found
     """
 
     archive_hash = request.match_info.get('archive_hash')
@@ -118,7 +118,6 @@ async def archivate(request):
 
         await response.write_eof()
     except:
-
         # Перехватываю ВСЕ exception'ы, включая BaseException,
         # чтобы остановить работу zip
 
@@ -130,11 +129,12 @@ async def archivate(request):
         await zip_process.wait()
 
 
-async def handle_index_page(request):
+async def handle_index_page(
+        request: aiohttp.web.Request) -> aiohttp.web.Response:
     """Handler of main page
 
     Args:
-        request ([Request]): HTTP Request
+        request (Request): HTTP Request
 
     Returns:
         [Response]: HTML page as response
@@ -173,14 +173,14 @@ def _configure_settings(args):
         args ([Namespace]): Parsed command line arguments
     """
 
-    def dbg_lvl(value):
+    def dbg_lvl(value: str) -> int:
         """Set log messages level
 
         Args:
-            value ([str]): ON/OFF value
+            value (str): ON/OFF value
 
         Returns:
-            [int]: log messages level from logging module
+            int: log messages level from logging module
         """
         _map = {
             'ON': logging.NOTSET,
